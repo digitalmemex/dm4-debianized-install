@@ -107,7 +107,7 @@ useradd -s /usr/sbin/nologin -r -M -d ${VARDEST} deepamehta
 
 # Set owner and access rights
 chown -R deepamehta:root ${LOGDIR}
-chmod -R 550 ${LOGDIR}
+chmod -R 770 ${LOGDIR}
 
 chown -R deepamehta:deepamehta ${CACHEDIR}
 chmod -R 770 ${CACHEDIR}
