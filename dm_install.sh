@@ -98,7 +98,7 @@ rm ${FILEDIR}/deepamehta-*
 mv ${FILEDIR}/* ${DOCDIR}/
 
 # Remove Workdir
-# rm -r ${WORKDIR}
+rm -r ${WORKDIR}
 
 
 # Create system user
@@ -126,6 +126,7 @@ chmod 550 ${CONFDIR}
 chmod 755 /etc/init.d/deepamehta
 
 # Update rc.d links
-update-rc.d deepamehta default
+cd /etc/init.d/
+update-rc.d deepamehta defaults
 
 #EOF
