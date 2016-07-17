@@ -116,9 +116,9 @@ chown -R deepamehta:deepamehta ${VARDEST}
 chmod -R 550 ${VARDEST}
 
 chown -R root:root ${BINDEST}
-chmod -R 555 ${BINDEST}
-
-chmod 444 ${BINDEST}/bundle-deploy/about-this-directory.txt
+chmod 555 ${BINDEST}
+chmod 444 ${BINDEST}/bundle/*
+chmod 444 ${BINDEST}/bundle-deploy/*
 
 chown -R root:deepamehta ${CONFDIR}
 chmod 550 ${CONFDIR}
