@@ -1,0 +1,34 @@
+<VirtualHost *:443>
+    
+    ServerName your.server.tld
+    ServerAdmin postmaster@yourserver.tld
+    DefaultType text/html
+
+    SSLEngine On
+    SSLCertificateFile /etc/letsencrypt/live/your.server.tld/cert.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/your.server.tld/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/your.server.tld/chain.pem
+
+    ErrorLog /var/log/apache2/deepamehta-ssl-error.log
+    CustomLog /var/log/apache2/deepamehta-ssl-access.log combined
+    
+    RewriteEngine On 
+    RewriteRule ^/?$ http://localhost:8080/de.deepamehta.webclient [P] 
+
+    ProxyStatus On
+    ProxyPreserveHost Off
+    AllowEncodedSlashes NoDecode
+    
+    <Proxy *>
+    Order deny,allow
+        Allow from all
+    </Proxy>
+    
+    <location />
+        Order allow,deny
+        Allow from all
+        ProxyPass http://localhost:8080/ nocanon
+        ProxyPassReverse http://localhost:8080/
+    </location>
+
+</VirtualHost>
