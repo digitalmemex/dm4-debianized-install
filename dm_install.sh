@@ -123,6 +123,8 @@ chmod 444 ${BINDEST}/bundle-deploy/about-this-directory.txt
 chown -R root:deepamehta ${CONFDIR}
 chmod 550 ${CONFDIR}
 
+chmod 755 /etc/init.d/deepamehta
+
 # Update rc.d links
 update-rc.d deepamehta default
 
