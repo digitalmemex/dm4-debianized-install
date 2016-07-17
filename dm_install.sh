@@ -110,7 +110,7 @@ chown -R deepamehta:root ${LOGDIR}
 chmod -R 550 ${LOGDIR}
 
 chown -R deepamehta:deepamehta ${CACHEDIR}
-chmod -R 550 ${CACHEDIR}
+chmod -R 770 ${CACHEDIR}
 
 chown -R deepamehta:deepamehta ${VARDEST}
 chmod -R 550 ${VARDEST}
