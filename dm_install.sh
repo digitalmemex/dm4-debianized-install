@@ -32,6 +32,9 @@ if [ ! -d ${WORKDIR} ]; then
     mkdir -p ${WORKDIR}
 fi
 
+# install jre
+apt-get install default-jre-headless
+
 # Fetch and unpack DeepaMehta
 wget -q ${LINKURL} -O ${ZIPFILE}
 if [ "$(  file -b ${ZIPFILE} )" == "empty" ]; then
