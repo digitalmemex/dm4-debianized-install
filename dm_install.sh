@@ -125,4 +125,10 @@ chmod 755 /usr/share/deepamehta/deepamehta.sh
 cd /etc/init.d/
 update-rc.d deepamehta defaults
 
+# Inform the admin
+echo ""
+echo "DeepaMehta ${DM_VERSION} was installed successfuly."
+echo "Please adjust /etc/deepamehta/deepamehta.conf to your needs."
+echo "Don't forget to enable DeepaMehta in /etc/default/deepamehta before you start it!"
+
 #EOF
