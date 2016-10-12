@@ -13,7 +13,6 @@ if [ $( id -u ) != 0 ]; then
     exit 1
 fi
 
-
 # Variables
 ZEIT=$( date +%s )
 WORKDIR=/tmp/dm_installer_${ZEIT}
@@ -33,7 +32,6 @@ if [ ! -d ${WORKDIR} ]; then
     mkdir -p ${WORKDIR}
 fi
 
-
 # Fetch and unpack DeepaMehta
 wget -q ${LINKURL} -O ${ZIPFILE}
 if [ "$(  file -b ${ZIPFILE} )" == "empty" ]; then
@@ -42,7 +40,6 @@ if [ "$(  file -b ${ZIPFILE} )" == "empty" ]; then
 elif [ "$(  file -b ${ZIPFILE} | grep "Zip archive data" )" != "" ]; then
     unzip -qq ${ZIPFILE} -d ${WORKDIR}
 fi
-
 
 # Fetch and unpack Debian Scripts
 wget -q ${DEBURL} -O ${WORKDIR}/dm-deb.zip
@@ -53,10 +50,8 @@ elif [ "$(  file -b ${WORKDIR}/dm-deb.zip | grep "Zip archive data" )" != "" ]; 
     unzip -qq ${WORKDIR}/dm-deb.zip -d ${WORKDIR}
 fi
 
-
 # Remove Gogo-shell files
 rm ${FILEDIR}/bundle/org.apache.felix.gogo.*
-
 
 # Create destination directories and move the files
 mkdir -p ${CONFDIR}
@@ -83,7 +78,6 @@ mv ${WORKDIR}/debian/apache24 ${DOCDIR}/
 mv ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta
 mv ${WORKDIR}/debian/start ${BINDEST}/deepamehta.sh
 
-
 # Config files could be derived from originals with sed at some point
 mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/
 mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/
@@ -100,10 +94,8 @@ mv ${FILEDIR}/* ${DOCDIR}/
 # Remove Workdir
 rm -r ${WORKDIR}
 
-
 # Create system user
 useradd -s /usr/sbin/nologin -r -M -d ${VARDEST} deepamehta
-
 
 # Set owner and access rights
 chown -R deepamehta:root ${LOGDIR}
@@ -124,6 +116,7 @@ chown -R root:deepamehta ${CONFDIR}
 chmod 550 ${CONFDIR}
 
 chmod 755 /etc/init.d/deepamehta
+chmod 755 /usr/share/deepamehta/deepamehta.sh
 
 # Update rc.d links
 cd /etc/init.d/
