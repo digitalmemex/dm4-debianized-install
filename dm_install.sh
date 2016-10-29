@@ -3,19 +3,19 @@
 # Enter a valid version number, e.g. 4.8.2
 DM_VERSION="$1"
 if [ -z $1 ]; then
-    echo "ERROR! Please enter a valid version number, e.g. 4.8 or 4.8.2."
+    echo " ERROR! Please enter a valid version number, e.g. 4.8 or 4.8.2."
     exit 1
 fi
 
 # Are we root?
 if [ $( id -u ) != 0 ]; then
-    echo "ERROR! Please run the script as root or sudo $0."
+    echo " ERROR! Please run the script as root or sudo $0."
     exit 1
 fi
 
 # Is DeepaMehta running?
 if [ ! -z "$( ps aux | grep deepamehta | grep -v grep )" ]; then
-    echo "ERROR! DeepaMehta is running on this server. Please stop and backup first."
+    echo " ERROR! DeepaMehta is running on this server. Please stop and backup first."
     exit 1
 fi
 
@@ -46,7 +46,7 @@ fi
 # Fetch and unpack DeepaMehta
 wget -q ${LINKURL} -O ${ZIPFILE}
 if [ "$(  file -b ${ZIPFILE} )" == "empty" ]; then
-    echo "ERROR! ${ZIPFILE} is emtpy."
+    echo " ERROR! ${ZIPFILE} is emtpy."
     exit 1
 elif [ "$(  file -b ${ZIPFILE} | grep "Zip archive data" )" != "" ]; then
     unzip -qq ${ZIPFILE} -d ${WORKDIR}
@@ -55,7 +55,7 @@ fi
 # Fetch and unpack Debian Scripts
 wget -q ${DEBURL} -O ${WORKDIR}/dm-deb.zip
 if [ "$(  file -b ${WORKDIR}/dm-deb.zip )" == "empty" ]; then
-    echo "ERROR! ${WORKDIR}/dm-deb.zip is emtpy."
+    echo " ERROR! ${WORKDIR}/dm-deb.zip is emtpy."
     exit 1
 elif [ "$(  file -b ${WORKDIR}/dm-deb.zip | grep "Zip archive data" )" != "" ]; then
     unzip -qq ${WORKDIR}/dm-deb.zip -d ${WORKDIR}
@@ -106,7 +106,7 @@ if [ ! -d ${DOCDIR} ]; then
     mkdir -p ${DOCDIR}
 fi
 
-echo "Installing binary files in ${BINDEST} ..."
+echo " Installing binary files in ${BINDEST} ..."
 if [ ! -z "$( ls ${FILEDIR}/bundle/ | grep dm4 )" ]; then
     mv ${FILEDIR}/bundle/dm4* ${BINDEST}/bundle-deploy/
 fi
@@ -117,19 +117,19 @@ mv ${FILEDIR}/bundle-deploy/* ${BINDEST}/bundle-deploy/
 rm -r ${FILEDIR}/bundle
 rm -r ${FILEDIR}/bin
 
-echo "Installing debian specific files ..."
+echo " Installing debian specific files ..."
 mv ${WORKDIR}/debian/default /etc/default/deepamehta
 mv ${WORKDIR}/debian/initd /etc/init.d/deepamehta
 mv ${WORKDIR}/debian/apache24 ${DOCDIR}/
 mv ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta
 mv ${WORKDIR}/debian/start ${BINDEST}/deepamehta.sh
 
-echo "Installing config files in ${CONFDIR} ..."
+echo " Installing config files in ${CONFDIR} ..."
 # Config files could be derived from originals with sed at some point
 mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/
 mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/
 
-echo "Cleaning up ..."
+echo " Cleaning up ..."
 rm -r ${FILEDIR}/bundle-deploy
 rm -r ${FILEDIR}/bundle-dev
 rm -r ${FILEDIR}/conf
@@ -142,7 +142,9 @@ mv ${FILEDIR}/* ${DOCDIR}/
 rm -r ${WORKDIR}
 
 # Create system user
-useradd -s /usr/sbin/nologin -r -M -d ${VARDEST} deepamehta
+if [ -z getent passwd deepamehta ]; then
+    useradd -s /usr/sbin/nologin -r -M -d ${VARDEST} deepamehta
+fi
 
 # Set owner and access rights
 chown -R deepamehta:root ${LOGDIR}
@@ -171,8 +173,9 @@ update-rc.d deepamehta defaults
 
 # Inform the admin
 echo ""
-echo "DeepaMehta ${DM_VERSION} was installed successfuly."
-echo "Please adjust /etc/deepamehta/deepamehta.conf to your needs."
-echo "Don't forget to enable DeepaMehta in /etc/default/deepamehta before you start it!"
+echo " DeepaMehta ${DM_VERSION} was installed successfuly."
+echo ""
+echo " Please adjust /etc/deepamehta/deepamehta.conf to your needs."
+echo " Don't forget to enable DeepaMehta in /etc/default/deepamehta before you start it!"
 
 #EOF
