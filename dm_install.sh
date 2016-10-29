@@ -13,6 +13,12 @@ if [ $( id -u ) != 0 ]; then
     exit 1
 fi
 
+# Is DeepaMehta running?
+if [ ! -z "$( ps aux | grep deepamehta | grep -v grep )" ]; then
+    echo "ERROR! DeepaMehta is running on this server. Please stop and backup first."
+    exit 1
+fi
+
 # Variables
 ZEIT=$( date +%s )
 WORKDIR=/tmp/dm_installer_${ZEIT}
