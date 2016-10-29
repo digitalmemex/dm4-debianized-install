@@ -112,6 +112,8 @@ mv ${FILEDIR}/bundle/dm4* ${BINDEST}/bundle-deploy/
 mv ${FILEDIR}/bundle/* ${BINDEST}/bundle/
 mv ${FILEDIR}/bin/* ${BINDEST}/bin/
 mv ${FILEDIR}/bundle-deploy/* ${BINDEST}/bundle-deploy/
+rm -r ${FILEDIR}/bundle
+rm -r ${FILEDIR}/bin
 
 echo "Installing debian specific files ..."
 mv ${WORKDIR}/debian/default /etc/default/deepamehta
@@ -125,7 +127,7 @@ echo "Installing config files in ${CONFDIR} ..."
 mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/
 mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/
 
-# Clean up
+echo "Cleaning up ..."
 rm -r ${FILEDIR}/bundle-deploy
 rm -r ${FILEDIR}/bundle-dev
 rm -r ${FILEDIR}/conf
