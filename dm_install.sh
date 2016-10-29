@@ -107,8 +107,10 @@ if [ ! -d ${DOCDIR} ]; then
 fi
 
 echo "Installing binary files in ${BINDEST} ..."
+if [ ! -z "$( ls ${FILEDIR}/bundle/ | grep dm4 )" ]; then
+    mv ${FILEDIR}/bundle/dm4* ${BINDEST}/bundle-deploy/
+fi
 mv ${FILEDIR}/bundle/deepamehta-* ${BINDEST}/bundle-deploy/
-mv ${FILEDIR}/bundle/dm4* ${BINDEST}/bundle-deploy/
 mv ${FILEDIR}/bundle/* ${BINDEST}/bundle/
 mv ${FILEDIR}/bin/* ${BINDEST}/bin/
 mv ${FILEDIR}/bundle-deploy/* ${BINDEST}/bundle-deploy/
