@@ -62,7 +62,7 @@ rm ${FILEDIR}/bundle/org.apache.felix.gogo.*
 if [ ! -d ${CONFDIR} ]; then
     mkdir -p ${CONFDIR}
 else
-    mv -r ${CONFDIR} ${CONFDIR}.${ZEIT}.bak
+    rm -r ${CONFDIR} ${CONFDIR}.${ZEIT}.bak
     mkdir -p ${CONFDIR}
 fi
 if [ ! -d ${BINDEST} ]; then
@@ -70,7 +70,7 @@ if [ ! -d ${BINDEST} ]; then
     mkdir ${BINDEST}/bundle
     mkdir ${BINDEST}/bundle-deploy
 else
-    mv -r ${BINDEST} ${BINDEST}.${ZEIT}.bak
+    rm -r ${BINDEST} ${BINDEST}.${ZEIT}.bak
     mkdir -p ${BINDEST}
     mkdir ${BINDEST}/bundle
     mkdir ${BINDEST}/bundle-deploy
@@ -80,7 +80,7 @@ if [ ! -d ${VARDEST} ]; then
     mkdir ${VARDEST}/deepamehta-db
     mkdir ${VARDEST}/deepamehta-filedir
 else
-    mv -r ${VARDEST} ${VARDEST}.${ZEIT}.bak
+    rm -r ${VARDEST} ${VARDEST}.${ZEIT}.bak
     mkdir -p ${VARDEST}
     mkdir ${VARDEST}/deepamehta-db
     mkdir ${VARDEST}/deepamehta-filedir
