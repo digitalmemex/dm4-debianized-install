@@ -103,7 +103,7 @@ fi
 mv ${FILEDIR}/bundle/deepamehta-* ${BINDEST}/bundle-deploy/
 mv ${FILEDIR}/bundle/dm4* ${BINDEST}/bundle-deploy/
 mv ${FILEDIR}/bundle/* ${BINDEST}/
-mv ${FILEDIR}/bin/* ${BINDEST}/
+mv ${FILEDIR}/bin/* ${BINDEST}/bin/
 mv ${FILEDIR}/bundle-deploy/* ${BINDEST}/bundle-deploy/
 
 mv ${WORKDIR}/debian/default /etc/default/deepamehta
