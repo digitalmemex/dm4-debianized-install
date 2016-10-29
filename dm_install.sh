@@ -142,7 +142,7 @@ mv ${FILEDIR}/* ${DOCDIR}/
 rm -r ${WORKDIR}
 
 # Create system user
-if [ -z getent passwd deepamehta ]; then
+if [ -z "$( getent passwd deepamehta )" ]; then
     useradd -s /usr/sbin/nologin -r -M -d ${VARDEST} deepamehta
 fi
 
@@ -168,8 +168,10 @@ chmod 755 /etc/init.d/deepamehta
 chmod 755 /usr/share/deepamehta/deepamehta.sh
 
 # Update rc.d links
-cd /etc/init.d/
-update-rc.d deepamehta defaults
+if [ ! -L /etc/rc2.d/S20deepamehta ]; then
+    cd /etc/init.d/
+    update-rc.d deepamehta defaults
+fi
 
 # Inform the admin
 echo ""
