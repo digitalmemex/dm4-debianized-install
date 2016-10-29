@@ -33,7 +33,9 @@ if [ ! -d ${WORKDIR} ]; then
 fi
 
 # install jre
-apt-get install default-jre-headless
+if [ -z "$( dpkg-query -s 'default-jre-headless' | grep Status | grep "install ok installed" )" ]; then
+    apt-get install default-jre-headless
+fi
 
 # Fetch and unpack DeepaMehta
 wget -q ${LINKURL} -O ${ZIPFILE}
@@ -57,17 +59,44 @@ fi
 rm ${FILEDIR}/bundle/org.apache.felix.gogo.*
 
 # Create destination directories and move the files
-mkdir -p ${CONFDIR}
-mkdir -p ${BINDEST}
-mkdir -p ${VARDEST}
-mkdir ${VARDEST}/deepamehta-db
-mkdir ${VARDEST}/deepamehta-filedir
-mkdir -p ${CACHEDIR}
-mkdir -p ${LOGDIR}
-mkdir -p ${DOCDIR}
-
-mkdir ${BINDEST}/bundle
-mkdir ${BINDEST}/bundle-deploy
+if [ ! -d ${CONFDIR} ]; then
+    mkdir -p ${CONFDIR}
+else
+    mv -r ${CONFDIR} ${CONFDIR}.${ZEIT}.bak
+    mkdir -p ${CONFDIR}
+fi
+if [ ! -d ${BINDEST} ]; then
+    mkdir -p ${BINDEST}
+    mkdir ${BINDEST}/bundle
+    mkdir ${BINDEST}/bundle-deploy
+else
+    mv -r ${BINDEST} ${BINDEST}.${ZEIT}.bak
+    mkdir -p ${BINDEST}
+    mkdir ${BINDEST}/bundle
+    mkdir ${BINDEST}/bundle-deploy
+fi
+if [ ! -d ${VARDEST} ]; then
+    mkdir -p ${VARDEST}
+    mkdir ${VARDEST}/deepamehta-db
+    mkdir ${VARDEST}/deepamehta-filedir
+else
+    mv -r ${VARDEST} ${VARDEST}.${ZEIT}.bak
+    mkdir -p ${VARDEST}
+    mkdir ${VARDEST}/deepamehta-db
+    mkdir ${VARDEST}/deepamehta-filedir
+fi
+if [ ! -d ${CACHEDIR} ]; then
+    mkdir -p ${CACHEDIR}
+else
+    rm -r ${CACHEDIR}
+    mkdir -p ${CACHEDIR}
+fi
+if [ ! -d ${LOGDIR} ]; then
+    mkdir -p ${LOGDIR}
+fi
+if [ ! -d ${DOCDIR} ]; then
+    mkdir -p ${DOCDIR}
+fi
 
 mv ${FILEDIR}/bundle/deepamehta-* ${BINDEST}/bundle-deploy/
 mv ${FILEDIR}/bundle/dm4* ${BINDEST}/bundle-deploy/
