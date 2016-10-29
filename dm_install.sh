@@ -67,11 +67,13 @@ else
 fi
 if [ ! -d ${BINDEST} ]; then
     mkdir -p ${BINDEST}
+    mkdir ${BINDEST}/bin
     mkdir ${BINDEST}/bundle
     mkdir ${BINDEST}/bundle-deploy
 else
     mv ${BINDEST} ${BINDEST}.${ZEIT}.bak
     mkdir -p ${BINDEST}
+    mkdir ${BINDEST}/bin
     mkdir ${BINDEST}/bundle
     mkdir ${BINDEST}/bundle-deploy
 fi
@@ -100,8 +102,8 @@ fi
 
 mv ${FILEDIR}/bundle/deepamehta-* ${BINDEST}/bundle-deploy/
 mv ${FILEDIR}/bundle/dm4* ${BINDEST}/bundle-deploy/
-mv ${FILEDIR}/bundle ${BINDEST}/
-mv ${FILEDIR}/bin ${BINDEST}/
+mv ${FILEDIR}/bundle/* ${BINDEST}/
+mv ${FILEDIR}/bin/* ${BINDEST}/
 mv ${FILEDIR}/bundle-deploy/* ${BINDEST}/bundle-deploy/
 
 mv ${WORKDIR}/debian/default /etc/default/deepamehta
