@@ -100,18 +100,21 @@ if [ ! -d ${DOCDIR} ]; then
     mkdir -p ${DOCDIR}
 fi
 
+echo "Installing binary files in ${BINDEST} ..."
 mv ${FILEDIR}/bundle/deepamehta-* ${BINDEST}/bundle-deploy/
 mv ${FILEDIR}/bundle/dm4* ${BINDEST}/bundle-deploy/
-mv ${FILEDIR}/bundle/* ${BINDEST}/
+mv ${FILEDIR}/bundle/* ${BINDEST}/bundle/
 mv ${FILEDIR}/bin/* ${BINDEST}/bin/
 mv ${FILEDIR}/bundle-deploy/* ${BINDEST}/bundle-deploy/
 
+echo "Installing debian specific files ..."
 mv ${WORKDIR}/debian/default /etc/default/deepamehta
 mv ${WORKDIR}/debian/initd /etc/init.d/deepamehta
 mv ${WORKDIR}/debian/apache24 ${DOCDIR}/
 mv ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta
 mv ${WORKDIR}/debian/start ${BINDEST}/deepamehta.sh
 
+echo "Installing config files in ${CONFDIR} ..."
 # Config files could be derived from originals with sed at some point
 mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/
 mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/
