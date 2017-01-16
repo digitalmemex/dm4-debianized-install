@@ -166,6 +166,7 @@ chmod 550 ${CONFDIR}
 
 chmod 755 /etc/init.d/deepamehta
 chmod 755 /usr/share/deepamehta/deepamehta.sh
+chmod 644 /etc/logrotate.d/deepamehta
 
 # Update rc.d links
 if [ ! -L /etc/rc2.d/S20deepamehta ]; then
