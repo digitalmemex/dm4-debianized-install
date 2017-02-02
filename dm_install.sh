@@ -145,7 +145,7 @@ fi
 if [ ! -f /etc/logrotate.d/deepamehta ]; then
     mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/
 elif [ "$( diff ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta )" ]; then
-    mv ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta.${DM_VERSION}.dist.bak
+    mv ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta.${DM_VERSION}.dist.disabled
 fi
 
 
