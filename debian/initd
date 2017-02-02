@@ -89,7 +89,7 @@ do_start()
     # Check START_DEEPAMEHTA
     if [ "${START_DEEPAMEHTA}" != "yes" ]; then
         echo "   ${DESC} is disabled in /etc/default/${NAME}."
-        exit 0
+        exit 1
     fi
     # Return
     #   0 if daemon has been started

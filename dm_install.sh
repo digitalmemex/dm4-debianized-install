@@ -66,10 +66,10 @@ rm ${FILEDIR}/bundle/org.apache.felix.gogo.*
 
 # Create destination directories and move the files
 if [ ! -d ${CONFDIR} ]; then
+    echo " Creating new config dir ${CONFDIR}."
     mkdir -p ${CONFDIR}
 else
-    mv ${CONFDIR} ${CONFDIR}.${ZEIT}.bak
-    mkdir -p ${CONFDIR}
+    cp -a ${CONFDIR} ${CONFDIR}.${ZEIT}.bak
 fi
 if [ ! -d ${BINDEST} ]; then
     mkdir -p ${BINDEST}
@@ -128,20 +128,24 @@ elif [ "$( diff ${WORKDIR}/debian/initd /etc/init.d/deepamehta )" ]; then
     mv ${WORKDIR}/debian/initd /etc/init.d/deepamehta
 fi
 mv ${WORKDIR}/debian/apache24 ${DOCDIR}/
-mv ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta
 mv ${WORKDIR}/debian/start ${BINDEST}/deepamehta.sh
 
 echo " Installing config files in ${CONFDIR} ..."
 # Config files could be derived from originals with sed at some point
-if [ ! -f /etc/deepamehta-logging.conf ]; then
-    mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/
-elif [ "$( diff ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/deepamehta-logging.conf )" ]; then
-    mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/deepamehta-logging.conf.${DM_VERSION}.dist
-fi
-if [ ! -f /etc/deepamehta.conf ]; then
+if [ ! -f ${CONFDIR}/deepamehta.conf ]; then
     mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/
 elif [ "$( diff ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/deepamehta.conf )" ]; then
-    mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/deepamehta.conf.${DM_VERSION}.dist
+    mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/deepamehta.conf.${DM_VERSION}.dist.bak
+fi
+if [ ! -f ${CONFDIR}/deepamehta-logging.conf ]; then
+    mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/
+elif [ "$( diff ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/deepamehta-logging.conf )" ]; then
+    mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/deepamehta-logging.conf.${DM_VERSION}.dist.bak
+fi
+if [ ! -f /etc/logrotate.d/deepamehta ]; then
+    mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/
+elif [ "$( diff ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta )" ]; then
+    mv ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta.${DM_VERSION}.dist.bak
 fi
 
 
