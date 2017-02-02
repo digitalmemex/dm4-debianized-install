@@ -133,8 +133,17 @@ mv ${WORKDIR}/debian/start ${BINDEST}/deepamehta.sh
 
 echo " Installing config files in ${CONFDIR} ..."
 # Config files could be derived from originals with sed at some point
-mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/
-mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/
+if [ ! -f /etc/deepamehta-logging.conf ]; then
+    mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/
+elif [ "$( diff ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/deepamehta-logging.conf )" ]; then
+    mv ${WORKDIR}/debian/deepamehta-logging.conf ${CONFDIR}/deepamehta-logging.conf.${DM_VERSION}.dist
+fi
+if [ ! -f /etc/deepamehta.conf ]; then
+    mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/
+elif [ "$( diff ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/deepamehta.conf )" ]; then
+    mv ${WORKDIR}/debian/deepamehta.conf ${CONFDIR}/deepamehta.conf.${DM_VERSION}.dist
+fi
+
 
 echo " Cleaning up ..."
 rm -r ${FILEDIR}/bundle-deploy
