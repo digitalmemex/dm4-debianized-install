@@ -88,10 +88,7 @@ if [ ! -d ${VARDEST} ]; then
     mkdir ${VARDEST}/deepamehta-db
     mkdir ${VARDEST}/deepamehta-filedir
 else
-    mv ${VARDEST} ${VARDEST}.${ZEIT}.bak
-    mkdir -p ${VARDEST}
-    mkdir ${VARDEST}/deepamehta-db
-    mkdir ${VARDEST}/deepamehta-filedir
+    cp -a ${VARDEST} ${VARDEST}.${ZEIT}.bak
 fi
 if [ ! -d ${CACHEDIR} ]; then
     mkdir -p ${CACHEDIR}
@@ -118,8 +115,18 @@ rm -r ${FILEDIR}/bundle
 rm -r ${FILEDIR}/bin
 
 echo " Installing debian specific files ..."
-mv ${WORKDIR}/debian/default /etc/default/deepamehta
-mv ${WORKDIR}/debian/initd /etc/init.d/deepamehta
+if [ ! -f /etc/default/deepamehta ]; then
+    mv ${WORKDIR}/debian/default /etc/default/deepamehta
+elif [ "$( diff ${WORKDIR}/debian/default /etc/default/deepamehta )" ]; then
+    mv /etc/default/deepamehta /etc/default/deepamehta.${ZEIT}.bak
+    mv ${WORKDIR}/debian/default /etc/default/deepamehta
+fi
+if [ ! -f /etc/init.d/deepamehta ]; then
+    mv ${WORKDIR}/debian/initd /etc/init.d/deepamehta
+elif [ "$( diff ${WORKDIR}/debian/initd /etc/init.d/deepamehta )" ]; then
+    mv /etc/init.d/deepamehta /etc/init.d/deepamehta.${ZEIT}.bak
+    mv ${WORKDIR}/debian/initd /etc/init.d/deepamehta
+fi
 mv ${WORKDIR}/debian/apache24 ${DOCDIR}/
 mv ${WORKDIR}/debian/logrotate /etc/logrotate.d/deepamehta
 mv ${WORKDIR}/debian/start ${BINDEST}/deepamehta.sh

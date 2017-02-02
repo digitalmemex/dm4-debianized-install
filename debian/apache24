@@ -1,7 +1,5 @@
 <VirtualHost *:443>
     
-    # requires mod_proxy, mod_proxy_http, mod_rewrite, mod_ssl
-
     ServerName your.server.tld
     ServerAdmin postmaster@yourserver.tld
     DefaultType text/html
